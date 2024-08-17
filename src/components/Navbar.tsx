@@ -2,8 +2,6 @@
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
-import { Button } from '@react-email/components'
-import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
     const { data: session } = useSession();
@@ -21,7 +19,7 @@ const Navbar = () => {
                                 <p>Welcome,  {session.user?.username || session.user?.email}</p>
                                 <button
                                     className='w-full md:w-auto bg-black text-white p-2 rounded'
-                                    onClick={() => signOut({ callbackUrl: 'http://localhost:3000/signin' })}
+                                    onClick={() => signOut({ callbackUrl: 'https://quiteecho.onrender.com/signin' })}
                                 >
                                     Logout
                                 </button>
