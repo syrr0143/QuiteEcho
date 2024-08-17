@@ -15,29 +15,27 @@ import { Button } from "@/components/ui/button"
 import MessageCard from "@/components/MessageCard"
 import { Toast } from "@radix-ui/react-toast"
 
-
 const Page = () => {
     const [messages, setmessages] = useState<Message[]>([])
     const [isloading, setisloading] = useState(false)
     const [isSwitching, setisSwitching] = useState(false)
+    const [profileUrl, setProfileUrl] = useState<string>('')
     const { toast } = useToast()
-    const handleDeleteMessage = async (messageId: string) => {
-        setmessages(messages.filter((message) => message._id !== messageId))
-
-    };
     const { data: session } = useSession();
     const form = useForm({
         resolver: zodResolver(acceptMessageSchema)
     })
     const { register, watch, setValue } = form;
     const acceptMessages = watch('acceptMessages');
+    const handleDeleteMessage = async (messageId: string) => {
+        setmessages(messages.filter((message) => message._id !== messageId))
+
+    };
     const fetchAccpetMessages = useCallback(async () => {
         setisSwitching(true)
-
         try {
             const acceptStatus = await axios.get('/api/accept-Message');
             setValue('acceptMessages', acceptStatus.data.AcceptMessageStatus)
-
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
             toast({
@@ -49,7 +47,6 @@ const Page = () => {
             setisSwitching(false)
         }
     }, [setValue, toast])
-
 
     const fetchMessages = useCallback(async (refresh: boolean = false) => {
         setisloading(true);
@@ -79,12 +76,10 @@ const Page = () => {
             toast({
                 title: "Error",
                 description: axiosError.response?.data.message,
-
                 variant: "destructive"
             })
         } finally {
             setisloading(false);
-
             setisSwitching(false)
         }
     }, [setisloading, setmessages, toast]);
@@ -95,9 +90,13 @@ const Page = () => {
         }
         fetchMessages();
         fetchAccpetMessages();
-    }, [session, setValue, fetchAccpetMessages, fetchMessages])
+        if (session.user.username) {
+            const username = session.user.username;
+            const baseUrl = `${window.location.protocol}//${window.location.host}`;
+            setProfileUrl(`${baseUrl}/u/${username}`);
+        }
+    }, [session, setValue, fetchAccpetMessages, fetchMessages]);
 
-    // handleswitch changes
     const handleSwitchChange = async () => {
         setisSwitching(true)
         try {
@@ -113,7 +112,6 @@ const Page = () => {
                     color: "#388e3c",
                 },
             })
-
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>
             toast({
@@ -124,24 +122,22 @@ const Page = () => {
         } finally {
             setisSwitching(false)
         }
-
     }
-    const username = session?.user?.username
-    const baseUrl = `${window.location.protocol}//${window.location.host}`
-    const profileUrl = `${baseUrl}/u/${username}`
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(profileUrl)
-        toast({
-            title: "URL Copied ",
-            description: "URL copied successfully to clipboard",
-            variant: "default",
-            style: {
-                backgroundColor: "#dff0e0",
-                borderColor: "#7f9f7f",
-                color: "#388e3c",
-            },
-        })
+        if (profileUrl) {
+            navigator.clipboard.writeText(profileUrl)
+            toast({
+                title: "URL Copied ",
+                description: "URL copied successfully to clipboard",
+                variant: "default",
+                style: {
+                    backgroundColor: "#dff0e0",
+                    borderColor: "#7f9f7f",
+                    color: "#388e3c",
+                },
+            })
+        }
     }
 
     if (!session || !session.user) {
@@ -185,7 +181,6 @@ const Page = () => {
             )}
         </div>
     );
-
 }
 
 export default Page
