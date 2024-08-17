@@ -116,7 +116,7 @@ const Page = () => {
                     </Form>
                 </div>
                 <div className="text-center mt-4">
-                    <p>Did't received verification code ?{' '}
+                    <p>{`Did't received verification code ?`}
                         <Link href={'/signup'} className="text-blue-500 hover:text-blue-800">Sign-Up</Link>
                     </p>
 

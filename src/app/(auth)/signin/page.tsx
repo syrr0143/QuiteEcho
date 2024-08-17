@@ -93,6 +93,7 @@ const Page = () => {
                             Sign-In to QuiteEcho
                         </h1>
                         <p className="mb-4"> Sign-In to start the anonymous adventure</p>
+
                     </div>
                     <div>
                         <Form {...form}>
@@ -150,7 +151,7 @@ const Page = () => {
 
                     </div>
                     <div className="text-center mt-4">
-                        <p>Don't have an account?{' '}
+                        <p>{`Don't have an account?`}
                             <Link href={'/signup'} className="text-blue-500 hover:text-blue-800">Sign-Up</Link>
                         </p>
 
