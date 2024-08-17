@@ -13,6 +13,7 @@ import axios, { AxiosError } from "axios"
 import { ApiResponse } from "@/types/apiResponse"
 import { Button } from "@/components/ui/button"
 import MessageCard from "@/components/MessageCard"
+import { Toast } from "@radix-ui/react-toast"
 
 
 const Page = () => {
@@ -47,7 +48,7 @@ const Page = () => {
         } finally {
             setisSwitching(false)
         }
-    }, [setValue])
+    }, [setValue, toast])
 
 
     const fetchMessages = useCallback(async (refresh: boolean = false) => {
@@ -86,7 +87,7 @@ const Page = () => {
 
             setisSwitching(false)
         }
-    }, [setisloading, setmessages]);
+    }, [setisloading, setmessages, toast]);
 
     useEffect(() => {
         if (!session || !session.user) {
