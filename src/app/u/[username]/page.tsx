@@ -116,7 +116,7 @@ const Page = () => {
         if (username) {
             checkIfUserAccepting();
         }
-    }, [username]);
+    }, [username, toast]);
 
     return (
         <div className='mt-12 gap-4 justify-center'>

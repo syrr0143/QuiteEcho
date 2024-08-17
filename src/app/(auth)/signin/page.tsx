@@ -24,7 +24,7 @@ import { Loader2 } from "lucide-react"
 import { signIn } from "next-auth/react"
 import { request } from "http"
 
-const page = () => {
+const Page = () => {
     const [password, setPassword] = useState('');
     const [email, setemail] = useState('');
     const [usernameMessage, setUsernameMessage] = useState('');
@@ -173,4 +173,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

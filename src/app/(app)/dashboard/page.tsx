@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import MessageCard from "@/components/MessageCard"
 
 
-const page = () => {
+const Page = () => {
     const [messages, setmessages] = useState<Message[]>([])
     const [isloading, setisloading] = useState(false)
     const [isSwitching, setisSwitching] = useState(false)
@@ -187,4 +187,4 @@ const page = () => {
 
 }
 
-export default page
+export default Page

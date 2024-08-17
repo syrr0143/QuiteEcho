@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 
-const page = () => {
+const Page = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setemail] = useState('');
@@ -190,4 +190,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
