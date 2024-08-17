@@ -55,10 +55,8 @@ const Page = () => {
 
     useEffect(() => {
         const checkIfUserAccepting = async () => {
-            console.log('this is username from the params', username)
             try {
                 const response = await axios.get(`/api/find-user/${username}`);
-                console.log('this is response ', response)
                 if (!response.data.success) {
                     toast({
                         title: 'Error', description: response.data.message, style: {

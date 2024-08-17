@@ -38,13 +38,13 @@ const Page = () => {
     });
 
     const onSubmit = async (data: z.infer<typeof verifySchema>) => {
+        const usernames = params.username;
         try {
             console.log(data)
             await axios.post('/api/Verify-code', {
-                username: params.username,
+                username: usernames,
                 verificationCode: data.verificationCode
             })
-            console.log(params.username)
             toast({
                 title: 'Success',
                 description: 'Code verified successfully',
@@ -58,7 +58,7 @@ const Page = () => {
             router.replace('/signin');
 
         } catch (error) {
-            console.error('error in submitting otp')
+            console.error('error in submitting otp', error)
             const axiosError = error as AxiosError<ApiResponse>;
             let errorMessage = axiosError.response?.data.message;
             toast({

@@ -19,9 +19,7 @@ export async function POST(request: Request) {
     const userId = loggedInUser._id;
     const { acceptMessage } = await request.json();
     try {
-        console.log('previos accept message state is ', acceptMessage)
         const updatedUser = await UserModel.findByIdAndUpdate(userId, { isAcceptingMessage: !acceptMessage }, { new: true })
-        console.log('current accept message state is ', updatedUser)
 
         if (updatedUser) {
             return Response.json({

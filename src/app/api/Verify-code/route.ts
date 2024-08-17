@@ -9,9 +9,9 @@ const verificationCodeValaidator = z.object({
 
 export async function POST(request: Request) {
     await dbConnect();
+    const { username, verificationCode } = await request.json();
     try {
 
-        const { username, verificationCode } = await request.json();
         const user = await UserModel.findOne({ username: username });
         if (!user) {
             return Response.json({
