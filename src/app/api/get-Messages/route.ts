@@ -9,6 +9,9 @@ export async function GET(request: Request) {
     await dbConnect();
     const session = await getServerSession(authOptions);
     const loggedInUser: User = session?.user as User;
+    console.log('Logged in user:', loggedInUser);
+    console.log('User ID:', loggedInUser?._id);
+
     if (!session?.user || !loggedInUser) {
         return Response.json({
             success: false,
@@ -18,13 +21,16 @@ export async function GET(request: Request) {
         })
     }
     const userId = new mongoose.Types.ObjectId(loggedInUser._id);
+
     try {
+        console.log('in try block of message')
         const user = await UserModel.aggregate([
-            { $match: { id: userId } },
-            { $unwind: 'messages' },
+            { $match: { _id: userId } },
+            { $unwind: '$messages' },
             { $sort: { 'messages.createdAt': -1 } },
             { $group: { _id: '$_id', messages: { $push: '$messages' } } }
         ]);
+        console.log('user found is ', user)
         if (!user || user.length === 0) {
             return Response.json({
                 success: false,
@@ -33,15 +39,15 @@ export async function GET(request: Request) {
                 status: 200
             })
         }
+
         return Response.json({
-            success: false,
+            success: true,
             message: user[0].messages
         }, {
             status: 200
         })
-
     } catch (error) {
-        console.log('somethignwent wrong in getting message')
+        console.log('somethig went wrong in getting message', error)
         return Response.json({
             success: false,
             message: 'Failed to retrieve user data',

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             }, { status: 409 })
         }
         const existingUserWithEmail = await UserModel.findOne({ email });
-        const otp = Math.floor(Math.random() * 9000000 + 1000000).toString();
+        const otp = Math.floor(Math.random() * 90000000 + 1000000).toString();
         if (existingUserWithEmail) {
             if (existingUserWithEmail.isVerified) {
                 return Response.json({
